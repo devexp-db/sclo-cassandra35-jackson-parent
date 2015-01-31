@@ -1,6 +1,5 @@
-
 Name:          jackson-parent
-Version:       2.4.1
+Version:       2.5
 Release:       1%{?dist}
 Summary:       Parent pom for all Jackson components
 License:       ASL 2.0
@@ -25,8 +24,8 @@ Project for parent pom for all Jackson components.
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-cp -p %{SOURCE1} .
-sed -i 's/\r//' LICENSE-2.0.txt
+cp -p %{SOURCE1} LICENSE
+sed -i 's/\r//' LICENSE
 
 %build
 
@@ -36,8 +35,12 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE-2.0.txt README.md
+%doc README.md
+%license LICENSE
 
 %changelog
+* Sat Jan 31 2015 gil cattaneo <puntogil@libero.it> 2.5-1
+- update to 2.5
+
 * Wed Jul 02 2014 gil cattaneo <puntogil@libero.it> 2.4.1-1
 - initial rpm
