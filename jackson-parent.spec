@@ -1,6 +1,6 @@
 Name:          jackson-parent
-Version:       2.5
-Release:       2%{?dist}
+Version:       2.6.2
+Release:       1%{?dist}
 Summary:       Parent pom for all Jackson components
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-parent
@@ -8,14 +8,12 @@ Source0:       https://github.com/FasterXML/jackson-parent/archive/%{name}-%{ver
 # jackson-parent package don't include the license file
 # reported @ https://github.com/FasterXML/jackson-parent/issues/1
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
-%if %{?fedora} > 20
-BuildRequires: mvn(com.fasterxml:oss-parent:pom:)
-%else
-BuildRequires: mvn(com.fasterxml:oss-parent)
-%endif
-BuildRequires: mvn(junit:junit)
+
 BuildRequires: maven-local
-BuildRequires: replacer
+BuildRequires: mvn(com.fasterxml:oss-parent:pom:)
+BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
+BuildRequires: mvn(junit:junit)
+
 BuildArch:     noarch
 
 %description
@@ -39,6 +37,9 @@ sed -i 's/\r//' LICENSE
 %license LICENSE
 
 %changelog
+* Mon Sep 28 2015 gil cattaneo <puntogil@libero.it> 2.6.2-1
+- update to 2.6.2
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
