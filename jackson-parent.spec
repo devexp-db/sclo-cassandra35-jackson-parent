@@ -20,7 +20,7 @@ BuildArch:     noarch
 Project for parent pom for all Jackson components.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -q -n %{name}-%{name}-%{version}-1
 
 cp -p %{SOURCE1} LICENSE
 sed -i 's/\r//' LICENSE
