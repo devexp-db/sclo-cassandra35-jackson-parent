@@ -1,42 +1,52 @@
-Name:          jackson-parent
-Version:       2.7
-Release:       2.1%{?dist}
-Summary:       Parent pom for all Jackson components
-License:       ASL 2.0
-URL:           https://github.com/FasterXML/jackson-parent
-Source0:       https://github.com/FasterXML/jackson-parent/archive/%{name}-%{version}-1.tar.gz
+%{?scl:%scl_package jackson-parent}
+%{!?scl:%global pkg_name %{name}}
+
+Name:		%{?scl_prefix}jackson-parent
+Version:	2.7
+Release:	3.1%{?dist}
+Summary:	Parent pom for all Jackson components
+License:	ASL 2.0
+URL:		https://github.com/FasterXML/jackson-parent
+Source0:	https://github.com/FasterXML/%{pkg_name}/archive/%{pkg_name}-%{version}-1.tar.gz
 # jackson-parent package don't include the license file
 # reported @ https://github.com/FasterXML/jackson-parent/issues/1
 Source1:       http://www.apache.org/licenses/LICENSE-2.0.txt
 
-BuildRequires: maven-local
-BuildRequires: mvn(com.fasterxml:oss-parent:pom:)
-BuildRequires: mvn(com.google.code.maven-replacer-plugin:replacer)
-BuildRequires: mvn(junit:junit)
+BuildRequires:	%{?scl_prefix_maven}maven-local
+BuildRequires:	%{?scl_prefix}fasterxml-oss-parent
+BuildRequires:	%{?scl_prefix}replacer
+BuildRequires:	%{?scl_prefix_java_common}junit
+%{?scl:Requires: %scl_runtime}
 
-BuildArch:     noarch
+BuildArch:	noarch
 
 %description
 Project for parent pom for all Jackson components.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}-1
+%setup -q -n %{pkg_name}-%{pkg_name}-%{version}-1
 
 cp -p %{SOURCE1} LICENSE
 sed -i 's/\r//' LICENSE
 
 %build
-
+%{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 %mvn_build -j
+%{?scl:EOF}
 
 %install
+%{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
 %mvn_install
+%{?scl:EOF}
 
 %files -f .mfiles
 %doc README.md
 %license LICENSE
 
 %changelog
+* Mon Mar 06 2017 Tomas Repik <trepik@redhat.com> - 2.7-3.1
+- scl conversion
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.7-2.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
